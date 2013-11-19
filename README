@@ -1,0 +1,25 @@
+This formula does two different things:
+  - Configure clients with specific apt repos
+  - Configure servers to be either an apt repo or a caching proxy
+
+
+To manage clients:
+```
+include:
+  - apt.client
+```
+
+To manage an apt repo:
+```
+include:
+  - apt.mirror
+```
+
+To manage a caching proxy:
+```
+include:
+  - apt.cache
+```
+
+In all cases, appropriate pillar data must be populated.
+See the sample.pillar file for details.

@@ -1,0 +1,73 @@
+apt_client_repos:
+  rabbitmq:
+    line: deb http://www.rabbitmq.com/debian testing main
+    file: /etc/apt/sources.list.d/datadog.list
+    keyurl: http://www.rabbitmq.com/rabbitmq-signing-key-public.asc
+  my_partial_mirror:
+    line: deb http://example.com precise main
+    file: /etc/apt/sources.list.d/my_repo.list
+    keyid: 0000ffff
+    keyserver: keys.example.com
+
+apt:
+  cache:
+    path: /var/cache/apt-cacher-ng
+    upstream: mirrors.cat.pdx.edu/ubuntu
+  repo:
+    path: /var/export/apt
+    distros:
+      precise:
+        origin: Optional Origin
+        label: Optional Label
+        desc: Optional Description
+        component: main universe multiverse
+        arch: i386 amd64 source
+        pull: rabbitmq
+        update: upstream percona
+        signwith: default
+      precise-updates:
+        component: main universe multiverse
+        arch: i386 amd64 source
+        update: upstream
+        signwith: default
+      precise-security:
+        component: main universe multiverse
+        arch: i386 amd64 source
+        update: upstream-nofilter
+        signwith: default
+      testing:
+        component: main
+        arch: i386 amd64 source
+        update: rabbitmq
+    pulls:
+      rabbitmq:
+        from: testing
+    updates:
+      upstream-nofilter:
+        method: http://mirrors.cat.pdx.edu/ubuntu
+        verify: 40976EAF437D05B5
+        arch: i386 amd64 source
+        component: main universe multiverse
+      upstream:
+        method: http://mirrors.cat.pdx.edu/ubuntu
+        verify: 40976EAF437D05B5
+        arch: i386 amd64 source
+        component: main universe multiverse
+        filterlist: purge filter.list
+      percona:
+        method: http://repo.percona.com/apt/
+        verify: CD2EFD2A
+        component: main
+        arch: i386 amd64 source
+        filterlist: purge filter.list
+      rabbitmq:
+        method: http://www.rabbitmq.com/debian/
+        verify: 056E8E56
+        component: main
+        arch: i386 amd64 source
+        filterlist: purge filter.list
+  filter:
+    pkgs:
+      - pkgone install
+      - pkgtwo hold
+      - pkgthree =v1.0

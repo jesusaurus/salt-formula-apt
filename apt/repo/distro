@@ -1,0 +1,16 @@
+{% for codename, distro in salt['pillar.get']('apt:repo:distros', {}).iteritems() -%}
+{%- if distro.get('origin', false) %}Origin: {{ distro['origin'] }}
+{% endif %}
+{%- if distro.get('label', false) %}Label: {{ distro['label'] }}
+{% endif %}
+{%- if distro.get('desc', false) %}Description: {{ distro['desc'] }}{% endif %}
+Codename: {{ codename }}
+Architectures: {{ distro['arch'] }}
+Components: {{ distro['component'] }}
+{% if distro.get('update', false) %}Update: {{ distro['update'] }}
+{% endif %}
+{%- if distro.get('pull', false) %}Pull: {{ distro['pull'] }}
+{% endif %}
+{%- if distro.get('signwith', false) %}SignWith: {{ distro['signwith'] }}{% endif %}
+
+{% endfor %}

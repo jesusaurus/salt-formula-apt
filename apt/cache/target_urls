@@ -1,0 +1,1 @@
+http://{{ salt['pillar.get']('apt:cache:upstream') }}
