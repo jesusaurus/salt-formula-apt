@@ -1,11 +1,12 @@
-{% for name, update in salt['pillar.get']('apt:repo:updates', {}).iteritems() -%}
-
+{% for name, update in salt['pillar.get']('apt:repo:updates', {}).iteritems() %}
 Name: {{ name }}
 Method: {{ update['method'] }}
-{% if update.get('verify', false) %}VerifyRelease: {{ update['verify'] }}
-{% endif -%}
 Architectures: {{ update['arch'] }}
 Components: {{ update['component'] }}
-{% if update.get('filterlist', false) %}FilterList: {{ update['filterlist'] }}{% endif %}
-
+{%- if update.get('verify', false) %}
+VerifyRelease: {{ update['verify'] }}
+{% endif -%}
+{%- if update.get('filterlist', false) -%}
+FilterList: {{ update['filterlist'] }}
+{%- endif %}
 {% endfor %}
