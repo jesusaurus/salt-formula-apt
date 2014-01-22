@@ -5,8 +5,8 @@ Architectures: {{ update['arch'] }}
 Components: {{ update['component'] }}
 {%- if update.get('verify', false) %}
 VerifyRelease: {{ update['verify'] }}
-{% endif -%}
-{%- if update.get('filterlist', false) -%}
+{%- endif %}
+{%- if update.get('filterlist', false) %}
 FilterList: {{ update['filterlist'] }}
 {%- endif %}
 {% endfor %}
