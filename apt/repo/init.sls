@@ -57,6 +57,19 @@ reprepro:
     - template: jinja
     - require:
       - file: {{ path }}/conf
+
+{% for update_name, update in salt['pillar.get']('apt:repo:updates') %}
+
+{% set key = update.get('verify', false) %}
+{% if key %}
+{{ update_name }}_gpg_recv_{{ key }}:
+  cmd.run:
+    - name: gpg --recv-key {{ key }}
+    - unless: gpg --list-key {{ key }}
+{% endif %}
+
+{% endfor %}
+
 {% endif %}
 
 'reprepro --silent --basedir {{ path }} update ; reprepro --silent --basedir {{ path }} pull ; reprepro --silent --basedir {{ path }} export':
