@@ -58,7 +58,7 @@ reprepro:
     - require:
       - file: {{ path }}/conf
 
-{% for update_name, update in salt['pillar.get']('apt:repo:updates') %}
+{% for update_name, update in salt['pillar.get']('apt:repo:updates').iteritems() %}
 
 {% set key = update.get('verify', false) %}
 {% if key %}
