@@ -61,7 +61,7 @@ reprepro:
 {% for update_name, update in salt['pillar.get']('apt:repo:updates').iteritems() %}
 
 {% set key = update.get('verify', false) %}
-{% if key != 'blindtrust' %}
+{% if key and key != 'blindtrust' %}
 {{ update_name }}_gpg_recv_{{ key }}:
   cmd.run:
     - name: gpg --recv-key {{ key }}
